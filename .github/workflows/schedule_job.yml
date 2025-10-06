@@ -1,0 +1,17 @@
+name: Run nyhetsjeger scrapers
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run scrapers
+        run: |
+          source .venv/bin/activate
+          cd src/newsscraper
+          scrapy crawl all
