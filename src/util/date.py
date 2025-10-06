@@ -1,5 +1,29 @@
 from datetime import datetime
 
+def convert_iso_date_to_norwegian_date(date_str):
+    """
+    Convert a raw date string like '2025-10-08:00:00:00' or '2025-10-08T00:00:00'
+    into a Norwegian-style string: '08. oktober 2025'.
+    """
+    # Handle several possible formats safely
+    for fmt in ("%Y-%m-%d:%H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            date_obj = datetime.strptime(date_str, fmt)
+            break
+        except ValueError:
+            continue
+    else:
+        # If parsing fails, just return the original string
+        return date_str
+
+    # Month names in Norwegian
+    months = [
+        "januar", "februar", "mars", "april", "mai", "juni",
+        "juli", "august", "september", "oktober", "november", "desember"
+    ]
+
+    return f"{date_obj.day:02d}. {months[date_obj.month - 1]} {date_obj.year}"
+
 def convert_norwegian_date_to_postgres(date_str):
     """
     Convert a Norwegian date string to a PostgreSQL date string.
