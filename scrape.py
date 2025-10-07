@@ -21,4 +21,4 @@ if __name__ == "__main__":
         crawler = process.create_crawler(spider)
         crawler.signals.connect(all_done, signal=signals.spider_closed)
         process.crawl(crawler)
-    process.start(blocking=True)
+    process.start()
