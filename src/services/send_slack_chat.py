@@ -42,8 +42,8 @@ def send_slack_chat(
                 """,
                 (message_id, item["url"], item["image_url"], item["site"], item["title"], item["subtitle"], item["date"]),
             )
-            # if cur.fetchone() is None:     # row already existed
-            #     return False
+            if cur.fetchone() is None:     # row already existed
+                return False
 
             # 2. Find all channels that subscribe to this news-source
             cur.execute(

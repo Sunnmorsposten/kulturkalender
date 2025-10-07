@@ -3,8 +3,8 @@ from botocore.config import Config
 
 import os
 
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 ACCESS_ID = os.getenv("SPACES_ACCESS_ID")
 SECRET_KEY = os.getenv("SPACES_SECRET_KEY")
