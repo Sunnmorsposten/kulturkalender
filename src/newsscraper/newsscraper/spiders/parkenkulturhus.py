@@ -87,13 +87,15 @@ class ParkenKulturhusSpider(scrapy.Spider):
             message_id = full_url
 
             # Store via your pipeline
+
             send_slack_chat(
                 message_id=message_id, 
                 item=item, 
                 sender="Kulturkalender",
                 icon_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIRHjoVfkDSq34p8pmr3WugseXR9sQjHHM4g&s"
                 )
-            print(item)
+            
+            yield item
 
     # ----------------------------
     # Helpers
