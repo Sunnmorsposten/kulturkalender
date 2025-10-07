@@ -14,7 +14,7 @@ from src.services.send_slack_chat import send_slack_chat
 
 class ParkenKulturhusSpider(scrapy.Spider):
     name = "parkenkulturhusspider"
-    allowed_domains = ["parkenkulturhus.no"]
+    allowed_domains = ["parkenkulturhus.no", "www.parkenkulturhus.no"]
     start_urls = ["https://www.parkenkulturhus.no/program/"]
 
     # Norwegian month name -> month number
@@ -33,6 +33,13 @@ class ParkenKulturhusSpider(scrapy.Spider):
         "des": 12, "desember": 12,
     }
 
+    def start_requests(self):
+        if not self.start_urls:
+            self.logger.warning("start_urls is empty — no initial requests will be scheduled.")
+        for url in self.start_urls:
+            self.logger.info(f"[seed] scheduling: {url}")
+            yield scrapy.Request(url, callback=self.parse, dont_filter=True)
+
     def parse(self, response):
         """
         Extract event cards and emit normalized items in the requested format:
@@ -44,6 +51,7 @@ class ParkenKulturhusSpider(scrapy.Spider):
             "site": ""
         }
         """
+        self.logger.info(f"[parse] fetched {response.url} (status {response.status})")
         # Only real event cards: ".tease-event", skip ".tease-manual-content"
         cards = response.css(".grid article.tease.tease-event")
 
