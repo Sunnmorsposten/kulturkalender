@@ -1,11 +1,10 @@
 from boto3 import session
 from botocore.config import Config
-from dotenv import load_dotenv
-
 
 import os
 
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 ACCESS_ID = os.getenv("SPACES_ACCESS_ID")
 SECRET_KEY = os.getenv("SPACES_SECRET_KEY")
