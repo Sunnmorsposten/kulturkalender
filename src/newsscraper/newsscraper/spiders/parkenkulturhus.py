@@ -47,7 +47,7 @@ class ParkenKulturhusSpider(scrapy.Spider):
         # Only real event cards: ".tease-event", skip ".tease-manual-content"
         cards = response.css(".grid article.tease.tease-event")
 
-        for card in cards[:1]:
+        for card in cards:
             rel_url = card.css("a::attr(href)").get()
             if not rel_url:
                 continue
