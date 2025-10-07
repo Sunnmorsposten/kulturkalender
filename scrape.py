@@ -12,7 +12,8 @@ def all_done():
 if __name__ == "__main__":
     process = CrawlerProcess(settings={
         "CLOSESPIDER_TIMEOUT": 300,
-        "TELNETCONSOLE_ENABLED": False
+        "TELNETCONSOLE_ENABLED": False,
+        "LOG_LEVEL": "INFO"
     })
     for spider in [
         ParkenKulturhusSpider,

@@ -6,7 +6,7 @@ from psycopg2 import sql
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from src.clients.slack import app
-from src.clients.pg import conn   # psycopg2 connection object
+from src.clients.pg import get_conn   # psycopg2 connection object
 from src.util.slack import build_event_blocks
 
 def send_slack_chat(
@@ -29,6 +29,7 @@ def send_slack_chat(
         True  – message sent  
         False – message had already been sent earlier
     """
+    conn = get_conn()
     with conn:                       # <-- commits automatically on success, rolls back on error
         with conn.cursor() as cur:
             # 1. Atomically try to reserve the id

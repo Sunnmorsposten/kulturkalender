@@ -28,5 +28,5 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-        run: |
-          python3 scrape.py
+        timeout-minutes: 10
+        run: python3 -u scrape.py
