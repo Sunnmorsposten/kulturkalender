@@ -1,8 +1,7 @@
 name: Run nyhetsjeger scrapers
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
+  workflow_dispatch:
 
 jobs:
   scrape:
