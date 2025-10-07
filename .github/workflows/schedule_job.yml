@@ -5,15 +5,12 @@ on:
 
 jobs:
   scrape:
+    runs-on: [self-hosted, linux]
     environment: production
-    runs-on: self-hosted
+    container: python:3.13
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.13
+        uses: actions/checkout@v4
       - name: Install dependencies
         run: |
           pip3 install -r requirements.txt
