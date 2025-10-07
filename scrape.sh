@@ -7,9 +7,7 @@ cd src/newsscraper
 echo "Scraping started at: $(date)"
 
 for spider in \
-  fiskarlagetspider fiskebatspider hispider rafisklagetspider \
-  sjomatnorgespider surofispider kystverketspider pelagiskforeningspider \
-  nffovergangerspider bypakkealesundspider politispesialenhetspider
+  parkenkulturhusspider bypakkealesundspider
 do
     echo "Running $spider …"
     # Run scrapy in the foreground so timeout can really kill it, then keep going
