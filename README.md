@@ -8,6 +8,7 @@ All events should follow the following standard. This to ensure consistency for 
     "title": "",
     "subtitle": "",
     "url": "",
+    "image_url": "",
     "date": "YYYY-MM-DD:HH:MM:SS", // ISO-format
     "site": ""
 }
