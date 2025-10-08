@@ -5,7 +5,7 @@ from src.clients.pg import get_conn
 from src.clients.slack import app
 
 
-CHANNEL = "#smp-kulturjeger-test"
+CHANNEL = "#smp-kulturjeger"
 USERNAME = "Kulturkalender"
 ICON_EMOJI = ":calendar:"  # optional
 
