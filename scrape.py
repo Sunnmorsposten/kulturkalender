@@ -7,6 +7,10 @@ from src.newsscraper.newsscraper.spiders.lovenvoldtheater import LovenvoldTheate
 from src.newsscraper.newsscraper.spiders.fabrikkenkulturscene import FabrikkenKultursceneSpider
 from src.newsscraper.newsscraper.spiders.pircowork import PirCoworkSpider
 from src.newsscraper.newsscraper.spiders.terminalenbyscene import TerminalenBysceneSpider
+from src.newsscraper.newsscraper.spiders.alesundsbiblioteka import AlesundBibliotekaSpider
+from src.newsscraper.newsscraper.spiders.sobrascene import SobrasceneSpider
+
+from src.newsscraper.newsscraper.spiders.sbmarena import sbmArenaSpider
 
 configure_logging({"LOG_LEVEL": "INFO"})
 
@@ -28,6 +32,8 @@ if __name__ == "__main__":
         FabrikkenKultursceneSpider,
         PirCoworkSpider,
         TerminalenBysceneSpider,
+        AlesundBibliotekaSpider,
+        SobrasceneSpider,
     ]:
         crawler = process.create_crawler(spider)
         crawler.signals.connect(all_done, signal=signals.spider_closed)
