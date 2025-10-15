@@ -40,7 +40,7 @@ def send_slack_chat(
                 ON CONFLICT DO NOTHING
                 RETURNING id
                 """,
-                (message_id, item["url"], item["image_url"], item["site"], item["title"], item["subtitle"], item["date"]),
+                (message_id, item["url"], item.get("image_url"), item["site"], item["title"], item["subtitle"], item["date"]),
             )
             if cur.fetchone() is None:     # row already existed
                 return False
