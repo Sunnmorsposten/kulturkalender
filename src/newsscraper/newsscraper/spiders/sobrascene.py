@@ -3,7 +3,7 @@ import sys
 import os
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 import scrapy
@@ -79,6 +79,10 @@ class SobrasceneSpider(scrapy.Spider):
             start_date = event.get('scheduling', {}).get('config', {}).get('startDate')
             iso_date = self._to_iso(start_date)
             
+            # Skip events with dates older than current date
+            if not self._is_future_or_today(iso_date):
+                continue
+            
             item = {
                 "title": title,
                 "subtitle": subtitle,
@@ -144,7 +148,7 @@ class SobrasceneSpider(scrapy.Spider):
                 hour = int(mtime.group(1))
                 minute = int(mtime.group(2) or "0")
 
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         year = now.year
 
         try:
@@ -155,5 +159,19 @@ class SobrasceneSpider(scrapy.Spider):
         return dt.strftime("%Y-%m-%d:%H:%M:%S")
 
     def _fallback_date(self) -> str:
-        dt = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        dt = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
         return dt.strftime("%Y-%m-%d:%H:%M:%S")
+
+    def _is_future_or_today(self, iso_date: str) -> bool:
+        """
+        Check if the given ISO date string is today or in the future.
+        Returns False if the date is in the past.
+        """
+        try:
+            event_dt = datetime.strptime(iso_date, "%Y-%m-%d:%H:%M:%S")
+            now = datetime.now(timezone.utc)
+            # Compare only dates (ignore time) to include all events on current day
+            return event_dt.date() >= now.date()
+        except ValueError:
+            # If parsing fails, include the event (fail open)
+            return True
