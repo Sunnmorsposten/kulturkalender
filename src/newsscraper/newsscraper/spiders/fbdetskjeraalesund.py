@@ -84,6 +84,12 @@ class DetSkjerAalesundSpider(scrapy.Spider):
                 iso_date = iso_date.strip()
 
 
+            # Image URL
+            image_url = event.css("div.photo img::attr(src)").get()
+            if image_url:
+                image_url = image_url.strip()
+                if len(image_url) > 250:
+                    image_url = None
 
 
             # Site name
@@ -96,6 +102,8 @@ class DetSkjerAalesundSpider(scrapy.Spider):
                 "date": iso_date,
                 "site": site,
             }
+            if image_url:
+                item["image_url"] = image_url
 
             message_id = url
 
@@ -103,8 +111,9 @@ class DetSkjerAalesundSpider(scrapy.Spider):
                 message_id=message_id,
                 item=item,
                 sender="Kulturkalender",
-                icon_url="https://static.xx.fbcdn.net/rsrc.php/y1/r/ay1hV6OlegS.ico",
+                icon_url="https://smps3.ams3.cdn.digitaloceanspaces.com/kultur-data/fp_icon_64x64.png",
             )
+           # add icon_emoji=":facebook-logo:", later
 
 
             yield item
